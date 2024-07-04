@@ -1,8 +1,11 @@
 import React from 'react'
 import Conversation from './Conversation';
 import Messages from './Messages';
+import useMessage from '../context/messageContext.jsx';
 
 const Chat = () => {
+    
+    const {chatID}=useMessage();
     return (
         <>
         <div className="">
@@ -17,7 +20,7 @@ const Chat = () => {
                     </div>
                 </div>               
                 <div className="flex-grow  h-screen p-2 rounded-md">
-                        <Messages/>
+                        {chatID!==null?<Messages/>:<div>Select or start a new chat</div>}
                 </div>
             </div>
         </div>

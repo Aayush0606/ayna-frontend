@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import useMessage from '../context/messageContext.jsx';
 
-const ConversationItem = ({index,name,selectedIndex,changeSelectedIndex}) => {
-    const _class = selectedIndex===index ? 'dark:bg-slate-600' : '';
+const ConversationItem = ({index,name}) => {
+    const {chatID,setChatInfo}=useMessage();
+    const _class = chatID===index ? 'dark:bg-slate-600' : '';
     const handleClick=()=>{
-        changeSelectedIndex(index);
+        setChatInfo(index,[]);
     }
     return (
         <div onClick={handleClick}>

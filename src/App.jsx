@@ -1,12 +1,9 @@
-import Chat from "./components/Chat.jsx"
-
+import { Outlet } from "react-router-dom"
 function App() {
 
   return (
     <>
-      <div>
-        <Chat/>
-      </div>
+      <Outlet/>
     </>
   )
 }

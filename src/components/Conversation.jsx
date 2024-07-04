@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ConversationItem from './ConversationItem';
+import useMessage from '../context/messageContext.jsx';
 const Conversation = () => {
     const [selectedIndex,setSelectedIndex]=useState(null);
     const data = [
@@ -11,10 +12,6 @@ const Conversation = () => {
         {name:'Garen',time:'1 day ago', message: 'I\'m the bravest of all kind'},
     ]
 
-    const changeSelectedIndex=(index)=>{
-        setSelectedIndex(index);
-    }
-    
     return (
         <div className="p-1 no-scrollbar">
             {
@@ -23,8 +20,6 @@ const Conversation = () => {
                         key={index}
                         index={index}
                         name={item.name}
-                        selectedIndex={selectedIndex}
-                        changeSelectedIndex={changeSelectedIndex}
                     />
                 ))
             }
