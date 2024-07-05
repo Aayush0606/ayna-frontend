@@ -16,6 +16,6 @@ export const UserContextProvider = ({ children }) => {
   );
 };
 
-export default function useMessage() {
+export default function useUser() {
   return useContext(UserContext);
 }
