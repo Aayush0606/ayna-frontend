@@ -9,8 +9,14 @@ export const UserContextProvider = ({ children }) => {
   const [userChats, setUserChats] = useState([]);
 
   const setUserChatInfo=(data)=>{
-    const updatedChats=[data,...userChats];
+    const updatedChats=[...data,...userChats];
     setUserChats(updatedChats);
+  }
+  const resetUserData=()=>{
+    setUsername(null);
+    setUserId(null);
+    setUserJWTtoken(null);
+    setUserChats([]);
   }
   const setUserInfo = (username,userJWTtoken,userId) => {
     setUserId(userId);
@@ -18,7 +24,7 @@ export const UserContextProvider = ({ children }) => {
     setUserJWTtoken(userJWTtoken);
   };
   return (
-    <UserContext.Provider value={{ userId,username,userJWTtoken,userChats,setUserInfo,setUserChatInfo }}>
+    <UserContext.Provider value={{ userId,username,userJWTtoken,userChats,setUserInfo,setUserChatInfo,resetUserData }}>
       {children}
     </UserContext.Provider>
   );

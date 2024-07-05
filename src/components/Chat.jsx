@@ -6,23 +6,25 @@ import useUser from '../context/userContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CREATE_NEW_CHAT_URL } from '../../constant.js';
-
+import { ToastContainer,toast,Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 const Chat = () => {
     
-    const {chatID}=useMessage();
-    const {username,userId,userJWTtoken,setUserInfo,setUserChatInfo}=useUser();
+    const {chatID,setChatInfo,resetMessageData}=useMessage();
+    const {username,userId,userJWTtoken,setUserChatInfo,resetUserData}=useUser();
     const navigate=useNavigate();
+
     const handleUserLogout=()=>{
-        setUserInfo(null,null,null);
-        setUserChatInfo([]);
+        resetUserData();
+        resetMessageData();
         localStorage.removeItem('user');
         navigate('/login');
     }
+
     const addNewChat=async()=>{
         const chat_title=document.getElementById('chat_title');
         const chat_image=`https://robohash.org/${chat_title.value}_${Math.random()*10}.png?set=set3`;
         try {
-            console.log(userId)
             const data=await axios({
                 method:"POST",
                 data:{
@@ -30,27 +32,49 @@ const Chat = () => {
                     {
                         chat_title:chat_title.value,
                         chat_image,
-                        user_id:userId,
-                        timestamp:Date.now()
+                        user_id:userId
                     }
                 },
                 headers:{
-                    Authorization:`Bearer ${userJWTtoken}`
+                    Authorization:`Bearer ${userJWTtoken}`  
                 },
                 url:CREATE_NEW_CHAT_URL
             })
-            setUserChatInfo({chat_title,chat_image});
+            setUserChatInfo([{chat_id:data.data.data.id,chat_title:chat_title.value,chat_image}]);
+            setChatInfo(data.data.data.id,chat_title.value);
+            toast.success('New chat created', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
         } catch (error) {
-            console.log(error);
+            toast.error('Unable to create chat room', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
         }
-        setUserChatInfo({chat_title:chat_title.value,chat_image});
         chat_title.value="";
     }
+
     return (
         <>
+        <ToastContainer/>
         <div className="">
             <div className="flex bg-white dark:bg-gray-900">
-                <div className="w-80 h-screen dark:bg-gray-800 bg-gray-100 p-2 hidden md:block ">
+                <div className={`${chatID?'hidden':'block'} sm:block w-full sm:w-44 md:w-80 h-screen dark:bg-gray-800 bg-gray-100 p-2`}>
                     <div className="h-full overflow-y-auto">
                         <div className='flex justify-between'>
                             <div className="text-xl font-extrabold text-gray-600 dark:text-gray-200 p-3">{username}</div>
@@ -80,7 +104,7 @@ const Chat = () => {
                         <Conversation/>
                     </div>
                 </div>               
-                <div className="flex-grow  h-screen p-2 rounded-md">
+                <div className={`flex-grow  h-screen p-2 rounded-md ${chatID?'block':'hidden'} sm:block`}>
                         {chatID!==null?
                             <Messages/>:
                             (

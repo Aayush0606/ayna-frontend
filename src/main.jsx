@@ -13,7 +13,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route element={<ProtectedRoutes/>}>
         <Route
-          path="/home"
+          path="/"
           lazy={async () => {
             const HomePage = await import("./pages/HomePage.jsx");
             return { Component: HomePage.default };

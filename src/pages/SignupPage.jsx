@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SIGNUP_URL } from '../../constant.js';
 import axios from 'axios';
 import useUser from '../context/userContext.jsx';
+import { ToastContainer,toast,Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 function SignupPage() {
     const navigate=useNavigate();
     const {setUserInfo}=useUser();
@@ -28,16 +30,40 @@ function SignupPage() {
             const userId=data.data.user.id;
             setUserInfo(username,jwtToken,userId);
             localStorage.setItem("user",JSON.stringify({username,jwtToken,userId}));
-            navigate("/home")
+            toast.success('Signup successfull!! Redirecting...', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
         } catch (error) {
-            console.log(error.response.data.error.message);
+            toast.error(error.response.data.error.message, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
         }
     }
   return (
     <>
+    <ToastContainer />
     <div>
-        <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <section className="bg-gray-50 dark:bg-gray-900 ">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">

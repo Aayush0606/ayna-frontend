@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import useMessage from '../context/messageContext.jsx';
 
-const ConversationItem = ({index,name,image_url}) => {
+const ConversationItem = ({chat_id,name,image_url}) => {
     const {chatID,setChatInfo}=useMessage();
-    const _class = chatID===index ? 'dark:bg-slate-600' : '';
+    const _class = chatID===chat_id ? 'dark:bg-slate-600' : '';
     const handleClick=()=>{
-        setChatInfo(index,[]);
+        setChatInfo(chat_id,name,image_url);
     }
     return (
         <div onClick={handleClick}>
@@ -15,7 +15,7 @@ const ConversationItem = ({index,name,image_url}) => {
                         <div className="w-10 rounded-full">
                         <img
                             alt="Tailwind CSS chat bubble component"
-                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                            src={image_url} />
                         </div>
                     </div>
                     <div className="flex-grow p-2">

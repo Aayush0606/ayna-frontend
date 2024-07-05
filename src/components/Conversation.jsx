@@ -7,10 +7,10 @@ const Conversation = () => {
     return (
         <div className="p-1 no-scrollbar">
             {
-                userChats.map((item, index) => (
+                userChats.map((item) => (
                     <ConversationItem 
-                        key={index}
-                        index={index}
+                        key={item.chat_id}
+                        chat_id={item.chat_id}
                         name={item.chat_title}
                         image_url={item.chat_image}
                     />
