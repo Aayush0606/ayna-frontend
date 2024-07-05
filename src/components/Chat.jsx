@@ -41,7 +41,7 @@ const Chat = () => {
                 url:CREATE_NEW_CHAT_URL
             })
             setUserChatInfo([{chat_id:data.data.data.id,chat_title:chat_title.value,chat_image}]);
-            setChatInfo(data.data.data.id,chat_title.value);
+            setChatInfo(data.data.data.id,chat_title.value,chat_image);
             toast.success('New chat created', {
                 position: "top-center",
                 autoClose: 2000,
