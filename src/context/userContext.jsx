@@ -4,13 +4,21 @@ export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [userJWTtoken, setUserJWTtoken] = useState(null);
-  const setUserInfo = (username,userJWTtoken) => {
+  const [userChats, setUserChats] = useState([]);
+
+  const setUserChatInfo=(data)=>{
+    const updatedChats=[data,...userChats];
+    setUserChats(updatedChats);
+  }
+  const setUserInfo = (username,userJWTtoken,userId) => {
+    setUserId(userId);
     setUsername(username);
     setUserJWTtoken(userJWTtoken);
   };
   return (
-    <UserContext.Provider value={{ username,userJWTtoken,setUserInfo }}>
+    <UserContext.Provider value={{ userId,username,userJWTtoken,userChats,setUserInfo,setUserChatInfo }}>
       {children}
     </UserContext.Provider>
   );

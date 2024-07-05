@@ -25,7 +25,9 @@ function SignupPage() {
                 url:SIGNUP_URL
             });
             const jwtToken=data.data.jwt;
-            setUserInfo(username,jwtToken);
+            const userId=data.data.user.id;
+            setUserInfo(username,jwtToken,userId);
+            localStorage.setItem("user",JSON.stringify({username,jwtToken,userId}));
             navigate("/home")
         } catch (error) {
             console.log(error.response.data.error.message);

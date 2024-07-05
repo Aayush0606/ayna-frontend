@@ -21,9 +21,11 @@ function LoginPage() {
                 },
                 url:LOGIN_URL
             });
-            const username=data.data.user.username;
             const jwtToken=data.data.jwt;
-            setUserInfo(username,jwtToken);
+            const userId=data.data.user.id;
+            const username=data.data.user.username;
+            setUserInfo(username,jwtToken,userId);
+            localStorage.setItem("user",JSON.stringify({username,jwtToken,userId}));
             navigate("/home")
         } catch (error) {
             console.log(error.response.data.error.message);

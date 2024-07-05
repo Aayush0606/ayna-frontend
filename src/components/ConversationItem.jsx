@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useMessage from '../context/messageContext.jsx';
 
-const ConversationItem = ({index,name}) => {
+const ConversationItem = ({index,name,image_url}) => {
     const {chatID,setChatInfo}=useMessage();
     const _class = chatID===index ? 'dark:bg-slate-600' : '';
     const handleClick=()=>{

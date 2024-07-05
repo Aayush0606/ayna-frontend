@@ -1,9 +1,8 @@
 import { Outlet,Navigate } from "react-router-dom";
-import useUser from "../context/userContext.jsx";
 
 const ProtectedRoutes=()=>{
-    const {username}=useUser();
-    const user=username?true:false;
+    const userDetails=JSON.parse(localStorage.getItem('user'));
+    const user=userDetails?true:false;
     return user?<Outlet/>:<Navigate to="/login"/>
 }
 
